@@ -15,6 +15,23 @@ The Ethereum contract is a minor modification of the contract underlying CryptoP
 
 ### How to Use the NFTulips contract
 
-TBD...but enjoy this list of contract functions!
+TBD...but enjoy this list of contract functions! (Note: All of these functions will stop working if I, the owner, unilaterally toggle the emergency "circuit breaker".)
 
-* 
+* `getTulip(uint16 tulipIndex)` to claim a specified tulip for free (yep, for free...plus transaction fees)
+* `transferTulip(address to, uint16 tulipIndex)` to transfer ownership of a specified tulip
+* `tulipNoLongerForSale(uint16 tulipIndex)` to mark your specified tulip as "not for sale"
+* `offerTulipForSale(uint16 tulipIndex, uint minSalePriceInWei)` to offer your specified tulip for sale to anyone with a minimum amount of ether
+* `offerTulipForSaleToAddress(uint16 tulipIndex, uint minSalePriceInWei, address toAddress)` to offer your specified tulip for sale to a single address with a minimum amount of ether
+* `buyTulip(uint16 tulipIndex)` to buy a specified tulip (can pay as much as you want!)
+* `withdraw` to withdraw the ether that buyers have sent to you
+* `enterBidForTulip(uint16 tulipIndex)` to enter a bid for a specified tulip; ether value held in escrow
+* `acceptBidForTulip(uint16 tulipIndex, uint minPrice)` to accept a bid for a specified tulip
+* `withdrawBidForTulip(uint16 tulipIndex)` to withdraw the funds associated with a bid
+
+### Verifying Your Tulips
+
+(ADD IMAGE HERE)
+
+This is the official and genuine image of all 10,000 NFTulips. I embedded a SHA256 hash of the image file into the contract, in order to commit the contract to this image. Use `openssl`, Python's `hashlib`, or a similar tool to check the hash: `b929f0a772b476441f055c878ba2080ecb10dfd2f103fef876372946660c58fb`. 
+
+Likewise, I embedded a SHA256 hash of the Python code used to generate the NFTulips. It's not uploaded into this repo, but you should know this: the code uses an unseeded, secure pseudorandom number generator, so that running the code will produce a totally different set of tulips, each and every time. Here's the hash of the code, just in case I release it at a future date: `39dce9989126cb2d126e125a7c17de01200fcb7ea8e37705985d84cb4257487c`. 
