@@ -28,7 +28,7 @@ You can interact with the smart contract on EtherScan (link TBA).
 * `withdraw` to withdraw the ether that buyers have sent to you
 * `enterBidForTulip(uint16 tulipIndex)` to enter a bid for a specified tulip; ether value held in escrow
 * `acceptBidForTulip(uint16 tulipIndex, uint minPrice)` to accept a bid for a specified tulip
-* `withdrawBidForTulip(uint16 tulipIndex)` to withdraw the funds associated with a bid
+* `withdrawBidForTulip(uint16 tulipIndex)` to withdraw a bid you previously placed (must do so manually)
 
 ### Verifying Your Tulips
 
