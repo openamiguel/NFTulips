@@ -1,22 +1,3 @@
-// Based on the smart contract for CryptoPunks: 
-// https://github.com/larvalabs/cryptopunks/blob/master/contracts/CryptoPunksMarket.sol
-// Given that the CryptoPunks smart contract has performed well so far, 
-// I attempted to make as few changes as possible. 
-
-// Security upgrades include:
-// Locked pragma to Solidity 0.7.4 (and added all necessary syntax upgrades)
-// Added circuit breaker (owner only privilege)
-// Changed all if-then-throw statements to require statements
-
-// Efficiency upgrades include: 
-// Variable packing (within reason)
-// Reduced some variables to smaller size (e.g., uint --> uint16, string --> bytes8)
-
-// Other changes include:
-// Changed variable names to represent tulips
-
-// @author Miguel Opeña
-
 pragma solidity 0.7.4;
 
 contract NFTulipsMarket {
@@ -30,11 +11,10 @@ contract NFTulipsMarket {
     address admin;
     
     bool private stopped = false; 
-    bytes8 public standard = "NFTulips";
-    bytes8 public name; 
-    uint16 public totalSupply;
+    bytes8 public name = "NFTulips"; 
+    uint16 public totalSupply = 10000;
     bool public allTulipsAssigned = false;
-    uint16 public tulipsRemainingToAssign = 0;
+    uint16 public tulipsRemainingToAssign = 10000;
 
     //mapping (address => uint) public addressToTulipIndex;
     mapping (uint16 => address) public tulipIndexToAddress;
@@ -89,9 +69,6 @@ contract NFTulipsMarket {
     // Initialize contract; assign all tulips to admin; offer for sale at 0.05 ETH apiece
     constructor() {
         admin = msg.sender;
-        totalSupply = 10000; 
-        tulipsRemainingToAssign = totalSupply;
-        name = "NFTULIPS"; 
     }
 
     // Circuit breaker activation
@@ -130,7 +107,7 @@ contract NFTulipsMarket {
 
     // Buyer (msg.sender) claims tulip (tulipIndex) for themselves, at zero cost
     function getTulip(uint16 tulipIndex) stopInEmergency public {
-        require(allTulipsAssigned, "All tulips must be assigned");
+        require(!allTulipsAssigned, "All tulips already assigned");
         require(tulipsRemainingToAssign > 0, "No remaining tulips to assign"); 
         require(tulipIndexToAddress[tulipIndex] == address(0), "Tulip must be unclaimed");
         require(tulipIndex < totalSupply, "Invalid tulip index");
@@ -222,7 +199,7 @@ contract NFTulipsMarket {
     }
 
     // Seller withdraws the funds under their address
-    function withdraw() stopInEmergency public {
+    function withdraw() public {
         require(allTulipsAssigned, "All tulips must be assigned");
         uint amount = pendingWithdrawals[msg.sender];
 
@@ -273,8 +250,8 @@ contract NFTulipsMarket {
         emit TulipBought(tulipIndex, bid.value, seller, bid.bidder);
     }
 
-    // Withdraw funds associated with tulip bid
-    function withdrawBidForTulip(uint16 tulipIndex) stopInEmergency public {
+    // Bidder (msg.sender) withdraws a bid they previously placed
+    function withdrawBidForTulip(uint16 tulipIndex) public {
         require(allTulipsAssigned, "All tulips must be assigned");
         require(tulipIndex < totalSupply, "Invalid tulip index");  
         require(tulipIndexToAddress[tulipIndex] != address(0), "Zero address cannot bid");                
