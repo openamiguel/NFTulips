@@ -1,3 +1,6 @@
+// @author Miguel Opeña
+// SPDX-License-Identifier: MIT
+
 pragma solidity 0.7.4;
 
 contract NFTulipsMarket {
@@ -132,10 +135,11 @@ contract NFTulipsMarket {
         emit TulipTransfer(msg.sender, to, tulipIndex);
         // Check for the case where there is a bid from the new owner and refund it.
         // Any other bid can stay in place.
-        Bid memory bid = tulipBids[tulipIndex];
-        if (bid.bidder == to) {
+
+        // Bid memory bid = tulipBids[tulipIndex];
+        if (tulipBids[tulipIndex].bidder == to) {
             // Kill bid and refund value
-            pendingWithdrawals[to] += bid.value;
+            pendingWithdrawals[to] += tulipBids[tulipIndex].value;
             tulipBids[tulipIndex] = Bid(false, tulipIndex, address(0), 0);
         }
     }
@@ -171,13 +175,13 @@ contract NFTulipsMarket {
     function buyTulip(uint16 tulipIndex) stopInEmergency payable public {
         require(allTulipsAssigned, "All tulips must be assigned");
         require(tulipIndex < totalSupply, "Invalid tulip index"); 
-        Offer memory offer = tulipsOfferedForSale[tulipIndex];
-        require(offer.isForSale, "Tulip must be for sale"); 
-        require(offer.onlySellTo == address(0) || offer.onlySellTo == msg.sender, "Invalid offer.onlySellTo address"); 
-        require(msg.value >= offer.minValue, "Insufficient ETH attached"); 
-        require(offer.seller == tulipIndexToAddress[tulipIndex], "Seller no longer owner"); 
+        // Offer memory offer = tulipsOfferedForSale[tulipIndex];
+        require(tulipsOfferedForSale[tulipIndex].isForSale, "Tulip must be for sale"); 
+        require(tulipsOfferedForSale[tulipIndex].onlySellTo == address(0) || tulipsOfferedForSale[tulipIndex].onlySellTo == msg.sender, "Invalid offer.onlySellTo address"); 
+        require(msg.value >= tulipsOfferedForSale[tulipIndex].minValue, "Insufficient ETH attached"); 
+        require(tulipsOfferedForSale[tulipIndex].seller == tulipIndexToAddress[tulipIndex], "Seller no longer owner"); 
 
-        address seller = offer.seller;
+        address seller = tulipsOfferedForSale[tulipIndex].seller;
 
         tulipIndexToAddress[tulipIndex] = msg.sender;
         balanceOf[seller]--;
@@ -190,10 +194,11 @@ contract NFTulipsMarket {
 
         // Check for the case where there is a bid from the new owner and refund it.
         // Any other bid can stay in place.
-        Bid memory bid = tulipBids[tulipIndex];
-        if (bid.bidder == msg.sender) {
+
+        // Bid memory bid = tulipBids[tulipIndex];
+        if (tulipBids[tulipIndex].bidder == msg.sender) {
             // Kill bid and refund value
-            pendingWithdrawals[msg.sender] += bid.value;
+            pendingWithdrawals[msg.sender] += tulipBids[tulipIndex].value;
             tulipBids[tulipIndex] = Bid(false, tulipIndex, address(0), 0);
         }
     }
@@ -218,11 +223,11 @@ contract NFTulipsMarket {
         require(tulipIndexToAddress[tulipIndex] != address(0), "Zero address cannot bid");                
         require(tulipIndexToAddress[tulipIndex] != msg.sender, "Owner cannot bid on own tulip"); 
         require(msg.value != 0, "msg.value cannot be zero"); 
-        Bid memory existing = tulipBids[tulipIndex];
-        require(msg.value > existing.value, "msg.value is too low"); 
-        if (existing.value > 0) {
+        // Bid memory existing = tulipBids[tulipIndex];
+        require(msg.value > tulipBids[tulipIndex].value, "msg.value is too low"); 
+        if (tulipBids[tulipIndex].value > 0) {
             // Refund the failing bid
-            pendingWithdrawals[existing.bidder] += existing.value;
+            pendingWithdrawals[tulipBids[tulipIndex].bidder] += tulipBids[tulipIndex].value;
         }
         tulipBids[tulipIndex] = Bid(true, tulipIndex, msg.sender, msg.value);
         emit TulipBidEntered(tulipIndex, msg.value, msg.sender);
@@ -234,20 +239,20 @@ contract NFTulipsMarket {
         require(tulipIndex < totalSupply, "Invalid tulip index");      
         require(tulipIndexToAddress[tulipIndex] == msg.sender, "Tulip owner only"); 
         address seller = msg.sender;
-        Bid memory bid = tulipBids[tulipIndex];
-        require(bid.value > 0, "Bid value cannot be zero"); 
-        require(bid.value >= minPrice, "Bid value is too low"); 
+        // Bid memory bid = tulipBids[tulipIndex];
+        require(tulipBids[tulipIndex].value > 0, "Bid value cannot be zero"); 
+        require(tulipBids[tulipIndex].value >= minPrice, "Bid value is too low"); 
 
-        tulipIndexToAddress[tulipIndex] = bid.bidder;
+        tulipIndexToAddress[tulipIndex] = tulipBids[tulipIndex].bidder;
         balanceOf[seller]--;
-        balanceOf[bid.bidder]++;
-        emit Transfer(seller, bid.bidder, 1);
+        balanceOf[tulipBids[tulipIndex].bidder]++;
+        emit Transfer(seller, tulipBids[tulipIndex].bidder, 1);
 
-        tulipsOfferedForSale[tulipIndex] = Offer(false, tulipIndex, bid.bidder, 0, address(0));
-        uint amount = bid.value;
+        tulipsOfferedForSale[tulipIndex] = Offer(false, tulipIndex, tulipBids[tulipIndex].bidder, 0, address(0));
+        uint amount = tulipBids[tulipIndex].value;
         tulipBids[tulipIndex] = Bid(false, tulipIndex, address(0), 0);
         pendingWithdrawals[seller] += amount;
-        emit TulipBought(tulipIndex, bid.value, seller, bid.bidder);
+        emit TulipBought(tulipIndex, tulipBids[tulipIndex].value, seller, tulipBids[tulipIndex].bidder);
     }
 
     // Bidder (msg.sender) withdraws a bid they previously placed
@@ -256,11 +261,11 @@ contract NFTulipsMarket {
         require(tulipIndex < totalSupply, "Invalid tulip index");  
         require(tulipIndexToAddress[tulipIndex] != address(0), "Zero address cannot bid");                
         require(tulipIndexToAddress[tulipIndex] != msg.sender, "Owner cannot bid on own tulip"); 
-        Bid memory bid = tulipBids[tulipIndex];
-        require(bid.bidder == msg.sender, "Only bidder can withdraw their bid"); 
-        emit TulipBidWithdrawn(tulipIndex, bid.value, msg.sender);
+        // Bid memory bid = tulipBids[tulipIndex];
+        require(tulipBids[tulipIndex].bidder == msg.sender, "Only bidder can withdraw their bid"); 
+        emit TulipBidWithdrawn(tulipIndex, tulipBids[tulipIndex].value, msg.sender);
 
-        uint amount = bid.value;
+        uint amount = tulipBids[tulipIndex].value;
         tulipBids[tulipIndex] = Bid(false, tulipIndex, address(0), 0);
         
         // Refund the bid money
