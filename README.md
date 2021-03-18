@@ -1,6 +1,6 @@
 ## NFTulips: Fresh, Immortal Tulips on the Ethereum Blockchain
 
-NFTulips are 10,000 unique collectible digital tulips that live on the Ethereum blockchain. The blockchain guarantees proof of ownership and trust-free buying/bidding/offering/selling. To learn more about a specific tulip, check out my website at _____________
+NFTulips are 10,000 unique collectible digital tulips that live on the Ethereum blockchain. The blockchain guarantees proof of ownership and trust-free buying/bidding/offering/selling. To learn more about a specific tulip, check out my website at (TBA). 
 
 This repo contains the Ethereum contract used to manage the tulips and a verifiable image of all 10,000 tulips. 
 
@@ -15,7 +15,7 @@ The Ethereum contract is a minor modification of the contract underlying CryptoP
 
 ### How to Use the NFTulips contract
 
-TBD...but enjoy this list of contract functions! (Note: All of these functions will stop working if I, the owner, unilaterally toggle the emergency "circuit breaker".)
+You can interact with the smart contract on EtherScan (link TBA). (Note: All of these functions will stop working if I, the owner, unilaterally toggle the emergency "circuit breaker".)
 
 * `getTulip(uint16 tulipIndex)` to claim a specified tulip for free (yep, for free...plus transaction fees)
 * `transferTulip(address to, uint16 tulipIndex)` to transfer ownership of a specified tulip
@@ -30,7 +30,7 @@ TBD...but enjoy this list of contract functions! (Note: All of these functions w
 
 ### Verifying Your Tulips
 
-(ADD IMAGE HERE)
+(ACTUAL IMAGE TBA)
 
 This is the official and genuine image of all 10,000 NFTulips. I embedded a SHA256 hash of the image file into the contract, in order to commit the contract to this image. Use `openssl`, Python's `hashlib`, or a similar tool to check the hash: `b929f0a772b476441f055c878ba2080ecb10dfd2f103fef876372946660c58fb`. 
 
