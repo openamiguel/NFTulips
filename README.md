@@ -32,7 +32,7 @@ You can interact with the smart contract on EtherScan (link TBA).
 
 ### Verifying Your Tulips
 
-(ACTUAL IMAGE TBA)
+![alt text](https://github.com/openamiguel/NFTulips/blob/45de962ff87524ef136c11de8aba9d2957897280/tulips_all.png)
 
 This is the official and genuine image of all 10,000 NFTulips. I embedded a SHA256 hash of the image file into the contract, in order to commit the contract to this image. Use `openssl`, Python's `hashlib`, or a similar tool to check the hash: `b929f0a772b476441f055c878ba2080ecb10dfd2f103fef876372946660c58fb`. 
 
