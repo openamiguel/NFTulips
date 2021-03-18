@@ -15,7 +15,9 @@ The Ethereum contract is a minor modification of the contract underlying CryptoP
 
 ### How to Use the NFTulips contract
 
-You can interact with the smart contract on EtherScan (link TBA). (Note: All of these functions will stop working if I, the owner, unilaterally toggle the emergency "circuit breaker".)
+You can interact with the smart contract on EtherScan (link TBA). 
+
+(Note: I built a simple circuit breaker into this smart contract. If I, the admin, unilaterally decide to do so, all functions except `withdraw` and `withdrawBidForTulip` will be shut off.)
 
 * `getTulip(uint16 tulipIndex)` to claim a specified tulip for free (yep, for free...plus transaction fees)
 * `transferTulip(address to, uint16 tulipIndex)` to transfer ownership of a specified tulip
