@@ -25,10 +25,10 @@ You can interact with the smart contract on EtherScan (link TBA).
 * `offerTulipForSale(uint16 tulipIndex, uint minSalePriceInWei)` to offer your specified tulip for sale to anyone with a minimum amount of ether
 * `offerTulipForSaleToAddress(uint16 tulipIndex, uint minSalePriceInWei, address toAddress)` to offer your specified tulip for sale to a single address with a minimum amount of ether
 * `buyTulip(uint16 tulipIndex)` to buy a specified tulip (can pay as much as you want!)
-* `withdraw` to withdraw the ether that buyers have sent to you
+* `withdraw` to withdraw the ether under your balance (includes ether that buyers send you in exchange for a tulip; includes ether that you made a losing bid with)
 * `enterBidForTulip(uint16 tulipIndex)` to enter a bid for a specified tulip; ether value held in escrow
 * `acceptBidForTulip(uint16 tulipIndex, uint minPrice)` to accept a bid for a specified tulip
-* `withdrawBidForTulip(uint16 tulipIndex)` to withdraw a bid you previously placed (must do so manually)
+* `withdrawBidForTulip(uint16 tulipIndex)` to withdraw a bid you previously placed; only works if your bid is currently the highest
 
 ### Verifying Your Tulips
 
