@@ -1,3 +1,20 @@
+// Based on the smart contract for CryptoPunks: 
+// https://github.com/larvalabs/cryptopunks/blob/master/contracts/CryptoPunksMarket.sol
+// Given that the CryptoPunks smart contract has performed well so far, 
+// I attempted to make as few changes as possible. 
+
+// Security upgrades include:
+// Locked pragma to Solidity 0.7.4 (and added all necessary syntax upgrades)
+// Added circuit breaker (owner only privilege)
+// Changed all if-then-throw statements to require statements
+
+// Efficiency upgrades include: 
+// Variable packing (within reason)
+// Reduced some variables to smaller size (e.g., uint --> uint16, string --> bytes8)
+
+// Other changes include:
+// Changed variable names to represent tulips
+
 // @author Miguel Opeña
 // SPDX-License-Identifier: MIT
 
