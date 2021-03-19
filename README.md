@@ -8,13 +8,6 @@ The Ethereum contract is a minor modification of the [contract underlying Crypto
 
 That said, I made sure to not touch the contract's functionality. This spares me the pain of unit testing my own unproven code (whereas the CryptoPunks code is very, very proven...it's facilitating a $190 million market, for crying out loud!) and facilitates my artistic vision of the NFTulips project. 
 
-### FAQ
-
-* **How much do the tulips cost?** As of deployment, all tulips are "free". Anyone with an Ethereum wallet can claim them by paying Ethereum's transaction fee. I don't earn a single Wei from that process, by the way. 
-* **Why should I buy a tulip?** Great question! They're "free" (see above), always fresh (digital flowers don't wilt or give off bad smells), and essentially immortal (as long as Ethereum remains active). Above all, they might (or might not) become the next big NFT. 
-* **I'm not really buying a tulip, am I?** Yep, that's right. And that's not a jab at NFTs or digital art, by the structure of this smart contract, you are not actually buying a token of an image of a tulip (more on that later; scroll down to "Verifying Your Tulips"). 
-* **How were the tulips created?** I wrote some clunky, unsightly Python code to generate the tulips. Although I won't be posting the code yet, I will include a hash of the file in the Ethereum contract for posterity (more on that later; scroll down to "Verifying Your Tulips"). 
-
 ### How to Use the NFTulips contract
 
 ~~You can interact with the smart contract on EtherScan (link TBA).~~ Just kidding, you can't. However, don't blame me, blame the system. Specifically, blame the fact that the transaction fees for deployment, roughly 0.84 ETH. If I strip away all of the contract's bidding functionality and most of the admin-only functions, the fees reduce to roughly 0.33 ETH. I'm a college student; I can't afford to spend that much money on _one project_!!!
@@ -33,6 +26,16 @@ There are multiple workarounds. One option is to go through OpenSea or another N
 * `enterBidForTulip(uint16 tulipIndex)` to enter a bid for a specified tulip; ether value held in escrow
 * `acceptBidForTulip(uint16 tulipIndex, uint minPrice)` to accept a bid for a specified tulip
 * `withdrawBidForTulip(uint16 tulipIndex)` to withdraw a bid you previously placed; only works if your bid is currently the highest
+
+### FAQ
+
+* **How much do the tulips cost?** As of deployment, all tulips are "free". Anyone with an Ethereum wallet can claim them by paying Ethereum's transaction fees (which seem to keep rising...\*sigh\*). Over time, if tulip owners start offering tulips for sale, they cost whatever the owner charges. 
+* **Why should I buy a tulip?** Great question! They're "free" (see above), always fresh (digital flowers don't wilt or give off bad smells), and essentially immortal (as long as Ethereum remains active). Above all, they might (or might not) become the next big NFT. But that's true of all NFTs, right? 
+* **I'm not really buying a tulip, am I?** Yep, that's right. And that's not a jab at NFTs or digital art, by the structure of this smart contract, you are not actually buying a token of an image of a tulip. You're actually buying a token of a hash of the composite image of all tulips (more on that later; scroll down to "Verifying Your Tulips"). 
+* **How were the tulips created?** I wrote some clunky, unsightly Python code to generate the tulips. Although I won't be posting the code yet, I will include a hash of the file in the Ethereum contract for posterity (more on that later; scroll down to "Verifying Your Tulips"). 
+* **Why didn't you publish the code yet?** The Ethereum transaction fees for publishing `NFTulips.sol` are too high. I resorted to executing a transaction with the SHA-256 hash of `NFTulips.sol` in the data field. 
+* **Will you ever publish the code?** That is the plan. I might have to wait for ETH2, which should diminish transaction costs considerably. I might also wait for ETH to drop in USD valuation, or for approximately 0.85 ETH to magically appear in my wallet. If I do publish the code, it will be from the same wallet address that sent a transaction with the SHA-256 hash of `NFTulips.sol` in the data field (i.e., my wallet address). 
+* **Is this a scam?** The only way for me to run a scam is if people give me Ether to fund the transaction fee for publishing `NFTulips.sol`, but I choose to keep the funds instead. Why would I do that? I already wrote the code (check out the repo) and spent hours going through syntax updates and minor security upgrades; if I didn't fully intend to publish my code on the mainnet, I wouldn't have bothered! 
 
 ### Verifying Your Tulips
 
