@@ -17,7 +17,9 @@ That said, I made sure to not touch the contract's functionality. This spares me
 
 ### How to Use the NFTulips contract
 
-You can interact with the smart contract on EtherScan (link TBA). 
+~~You can interact with the smart contract on EtherScan (link TBA).~~ Just kidding, you can't. However, don't blame me, blame the system. Specifically, blame the fact that the transaction fees for deployment, roughly 0.84 ETH. If I strip away all of the contract's bidding functionality and most of the admin-only functions, the fees reduce to roughly 0.33 ETH. I'm a college student; I can't afford to spend that much money on _one project_!!!
+
+There are multiple workarounds. One option is to go through OpenSea or another NFT marketplace, but I doubt that listing 10,000 NFTs will spare me any monetary pains. Another option is to give myself royalties for each transaction, but that strays from the original design of CryptoPunks and therefore ruins my punchline. Yet another option, which I did take, is to upload a hash of the `NFTulips.sol` file onto the Ethereum blockchain as a commitment for its future uploading. You can view this transaction here: TBA. 
 
 (Note: I built a simple circuit breaker into this smart contract. If I, the admin, unilaterally decide to do so, all functions except `withdraw` and `withdrawBidForTulip` will be shut off.)
 
