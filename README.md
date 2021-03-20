@@ -1,10 +1,8 @@
 ## NFTulips: Fresh, Immortal Tulips on the Ethereum Blockchain
 
-NFTulips are 10,000 unique collectible digital tulips that live on the Ethereum blockchain. The blockchain guarantees proof of ownership and trust-free buying/bidding/offering/selling. To learn more about a specific tulip, check out my website at (TBA). 
+NFTulips are 10,000 unique collectible digital tulips that live on the Ethereum blockchain. The blockchain guarantees proof of ownership and trust-free buying/bidding/offering/selling. To learn more about the artistic vision of NFTulips, check out my new blog, [Skeptical Futurist](https://skeptical-futurist.wixsite.com/blog/announcing-nftulips). 
 
-This repo contains the Ethereum contract used to manage the tulips and a verifiable image of all 10,000 tulips. 
-
-The Ethereum contract is a minor modification of the [contract underlying CryptoPunks](https://github.com/larvalabs/cryptopunks/blob/master/contracts/CryptoPunksMarket.sol), which is under the MIT License. I updated the code from Solidity 0.4.8 to Solidity 0.7.4, which required a lot of syntax edits. I also added a "circuit breaker" to shut off the contract in case of an emergency, and I added hash data from my NFTulips project (more on that later; scroll down to "Verifying Your Tulips"). Finally, I implemented some modest gas optimizations (variable packing, reducing variable sizes, minimizing data in memory) and changed variable names. 
+This repo contains the Ethereum contract used to manage the tulips and a verifiable image of all 10,000 tulips. The Ethereum contract is a minor modification of the [contract underlying CryptoPunks](https://github.com/larvalabs/cryptopunks/blob/master/contracts/CryptoPunksMarket.sol), published under the MIT License. I updated the code from Solidity 0.4.8 to Solidity 0.7.4, which required a lot of syntax edits. I also added a "circuit breaker" to shut off the contract in case of an emergency, and I added hash data from my NFTulips project (more on that later; scroll down to "Verifying Your Tulips"). Finally, I implemented some modest gas optimizations (variable packing, reducing variable sizes, minimizing data in memory) and changed variable names. 
 
 That said, I made sure to not touch the contract's functionality. This spares me the pain of unit testing my own unproven code (whereas the CryptoPunks code is very, very proven...it's facilitating a $190 million market, for crying out loud!) and facilitates my artistic vision of the NFTulips project. 
 
